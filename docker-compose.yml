@@ -12,6 +12,7 @@ sentinel:
     - SENTINEL_FAILOVER=5000
     - SENTINEL_QUORUM=1
     - SENTINEL_PORT=26379
+    - REDIS_MASTER=redis-master
   links:
     - master:redis-master
     - slave
