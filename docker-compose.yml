@@ -1,8 +1,8 @@
 master:
-  image: redis:3
+  image: redis:6.0.1-alpine
 slave:
-  image: redis:3
-  command: redis-server --slaveof redis-master 6379
+  image: redis:6.0.1-alpine
+  command: redis-server --replicaof redis-master 6379
   links:
     - master:redis-master
 sentinel:
@@ -10,6 +10,8 @@ sentinel:
   environment:
     - SENTINEL_DOWN_AFTER=5000
     - SENTINEL_FAILOVER=5000
+    - SENTINEL_QUORUM=1
+    - SENTINEL_PORT=26379
   links:
     - master:redis-master
     - slave
