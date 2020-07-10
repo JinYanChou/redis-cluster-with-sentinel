@@ -6,10 +6,13 @@ ENV SENTINEL_QUORUM=2 \
     SENTINEL_PORT=26000 \
     REDIS_MASTER="redis-master"
 
-COPY sentinel.conf /etc/redis/sentinel.conf
 COPY entrypoint.sh /usr/local/bin/
+COPY sentinel.conf /tmp/sentinel.conf
 
-RUN chown redis:redis /etc/redis/sentinel.conf \
+RUN chmod 666 /tmp/sentinel.conf \
+    && chown redis:root /tmp/sentinel.conf \
     && chmod +x /usr/local/bin/entrypoint.sh
+
+WORKDIR /etc/redis
 
 ENTRYPOINT ["entrypoint.sh"]
