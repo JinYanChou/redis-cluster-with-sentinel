@@ -1,10 +1,12 @@
 FROM redis:6.0.1-alpine
 
-ENV SENTINEL_QUORUM=2 \
-    SENTINEL_DOWN_AFTER=5000 \
+ENV SENTINEL_QUORUM=1 \
+    SENTINEL_DOWN_AFTER=1000 \
     SENTINEL_FAILOVER=10000 \
-    SENTINEL_PORT=26000 \
-    REDIS_MASTER="redis-master"
+    SENTINEL_PORT=26379 \
+    REDIS_MASTER="redis-master" \
+    REDIS_SLAVE="redis-slave" \
+    INSTANCE="mymaster"
 
 COPY entrypoint.sh /usr/local/bin/
 COPY sentinel.conf /tmp/sentinel.conf

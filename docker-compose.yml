@@ -8,11 +8,13 @@ slave:
 sentinel:
   build: sentinel
   environment:
-    - SENTINEL_DOWN_AFTER=5000
-    - SENTINEL_FAILOVER=5000
-    - SENTINEL_QUORUM=1
-    - SENTINEL_PORT=26379
-    - REDIS_MASTER=redis-master
+    - SENTINEL_DOWN_AFTER=100
+    # - SENTINEL_FAILOVER=10000
+    # - SENTINEL_QUORUM=1
+    # - SENTINEL_PORT=26379
+    # - REDIS_MASTER=redis-master
+    # - REDIS_SLAVE=redis-slave
+    # - INSTANCE=mymaster
   links:
     - master:redis-master
-    - slave
+    - slave:redis-slave
