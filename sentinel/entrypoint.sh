@@ -1,11 +1,7 @@
-#!/bin/sh
-
-mkdir -p /etc/redis
-cp /tmp/sentinel.conf /etc/redis/sentinel.conf
-
+#!/bin/bash
 REDIS_MASTER_IP=''
 REDIS_SLAVE_IP=''
-until [[ ! -z "$REDIS_MASTER_IP" ]] && [[ ! -z "$REDIS_SLAVE_IP" ]]
+until [[ ! -z "${REDIS_MASTER_IP}" ]] && [[ ! -z "${REDIS_SLAVE_IP}" ]]
 do
   REDIS_MASTER_IP=`echo $(getent hosts $REDIS_MASTER | cut -d' ' -f1)`
   REDIS_SLAVE_IP=`echo $(getent hosts $REDIS_SLAVE | cut -d' ' -f1)`
@@ -32,4 +28,4 @@ sed -i "s/\$SENTINEL_DOWN_AFTER/$SENTINEL_DOWN_AFTER/g" /etc/redis/sentinel.conf
 sed -i "s/\$SENTINEL_FAILOVER/$SENTINEL_FAILOVER/g" /etc/redis/sentinel.conf
 sed -i "s/\$REDIS_MASTER/$REDIS_MASTER_IP/g" /etc/redis/sentinel.conf
 
-exec docker-entrypoint.sh redis-server /etc/redis/sentinel.conf --sentinel
+exec redis-server /etc/redis/sentinel.conf --sentinel

@@ -1,6 +1,7 @@
-FROM redis:6.0.1-alpine
+FROM bitnami/redis:6.0
 
-ENV SENTINEL_QUORUM=1 \
+ENV ALLOW_EMPTY_PASSWORD=yes \
+    SENTINEL_QUORUM=1 \
     SENTINEL_DOWN_AFTER=1000 \
     SENTINEL_FAILOVER=10000 \
     SENTINEL_PORT=26379 \
@@ -8,12 +9,12 @@ ENV SENTINEL_QUORUM=1 \
     REDIS_SLAVE="redis-slave" \
     INSTANCE="mymaster"
 
-COPY entrypoint.sh /usr/local/bin/
-COPY sentinel.conf /tmp/sentinel.conf
+COPY --chown=1001:0 entrypoint.sh /usr/local/bin/
+COPY --chown=1001:0 sentinel.conf /etc/redis/sentinel.conf
 
-RUN chmod 666 /tmp/sentinel.conf \
-    && chown redis:root /tmp/sentinel.conf \
-    && chmod +x /usr/local/bin/entrypoint.sh
+RUN mkdir -p /etc/redis && \
+    chmod 666 /etc/redis/sentinel.conf && \
+    chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /etc/redis
 

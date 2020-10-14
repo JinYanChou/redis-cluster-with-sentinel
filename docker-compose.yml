@@ -1,7 +1,11 @@
 master:
-  image: redis:6.0.1-alpine
+  image: bitnami/redis:6.0
+  environment: 
+    - ALLOW_EMPTY_PASSWORD=yes
 slave:
-  image: redis:6.0.1-alpine
+  image: bitnami/redis:6.0
+  environment: 
+    - ALLOW_EMPTY_PASSWORD=yes
   command: redis-server --replicaof redis-master 6379
   links:
     - master:redis-master
