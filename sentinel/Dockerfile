@@ -12,8 +12,7 @@ ENV ALLOW_EMPTY_PASSWORD=yes \
 COPY --chown=1001:0 entrypoint.sh /usr/local/bin/
 COPY --chown=1001:0 sentinel.conf /etc/redis/sentinel.conf
 
-RUN mkdir -p /etc/redis && \
-    chmod 666 /etc/redis/sentinel.conf && \
+RUN chmod 666 /etc/redis/sentinel.conf && \
     chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /etc/redis
