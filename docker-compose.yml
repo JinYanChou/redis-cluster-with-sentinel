@@ -2,11 +2,20 @@ master:
   image: bitnami/redis:6.0
   environment: 
     - ALLOW_EMPTY_PASSWORD=yes
+    - REDIS_AOF_ENABLED=no
+    - REDIS_REPLICATION_MODE=master
+  # volumes:
+  #   - "./data/master:/bitnami/redis/data"
 slave:
   image: bitnami/redis:6.0
   environment: 
     - ALLOW_EMPTY_PASSWORD=yes
-  command: redis-server --replicaof redis-master 6379
+    - REDIS_AOF_ENABLED=no
+    - REDIS_REPLICATION_MODE=slave
+    - REDIS_MASTER_HOST=redis-master
+    - REDIS_MASTER_PORT_NUMBER=6379
+  # volumes:
+  #   - "./data/slave:/bitnami/redis/data"
   links:
     - master:redis-master
 sentinel:
