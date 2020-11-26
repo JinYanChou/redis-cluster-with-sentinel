@@ -1,4 +1,4 @@
-# docker build . -t 10.95.28.159:8083/baseimage/redis:6.0-sentinel-1.0
+# docker build . -t 10.95.28.159:8084/baseimage/redis:6.0-sentinel-1.0
 FROM bitnami/redis:6.0
 
 ENV ALLOW_EMPTY_PASSWORD=yes \
